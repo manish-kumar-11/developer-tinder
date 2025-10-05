@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 
 
-app.get("/user",(req,res)=>{
+app.get("/user/:userId",(req,res)=>{
+    console.log(req.params);
+    console.log(req.query)
     res.send({firstName:"Manish",lastName:"Kumar"});
 })
 app.post("/user",(req,res)=>{
@@ -17,9 +19,9 @@ app.delete("/user",(req,res)=>{
 })
 
 // this will match all the routes
-app.use("/",(req,res)=>{
-   res.send("Welcome to the home page");
-})
+// app.use("/",(req,res)=>{
+//    res.send("Welcome to the home page");
+// })
 app.use("/hello",(req,res)=>{
    res.send("Hello Hello Hello");
 })
