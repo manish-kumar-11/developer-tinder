@@ -19,6 +19,42 @@ app.post('/signup',async(req,res)=>{
   }
 })
 
+// Get user by email
+
+app.get('/user',async(req,res)=>{
+    const email = req.body.emailId
+    try{
+ 
+  const user  = await User.find({emailId:email})
+  if(user.length===0){
+    return res.status(404).send('User not found');
+  }
+  else{
+res.send(user)
+  }
+  ;
+    }
+    catch(err){
+        res.status(500).send('Error fetching while extracting the particular user', err.message);
+    }
+})
+// Feed Api get feed get all the user from the database
+app.get('/feed',async(req,res)=>{
+    try{
+        const users = await User.find({})
+        if(!users){
+             res.status(404).send('No users found');
+        }
+        else{
+res.send(users)
+        }
+        
+    }
+    catch(err){
+        res.status(500).send('Error fetching users', err.message);
+    }
+})
+
 
 connectDb().then(()=>{
 console.log('Connected to database successfully');
