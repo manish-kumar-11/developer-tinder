@@ -15,7 +15,7 @@ app.post('/signup',async(req,res)=>{
   res.send('User signed up successfully');
   }
   catch(err){
-   res.status(400).send('Error signing up user', err.message);
+   res.status(400).send('Error signing up user' + err.message);
   }
 })
 
@@ -52,6 +52,30 @@ res.send(users)
     }
     catch(err){
         res.status(500).send('Error fetching users', err.message);
+    }
+})
+
+app.delete('/user',async(req,res)=>{
+    const userId = req.body.userId
+    try{
+        const user = await User.findByIdAndDelete(userId)
+       res.send('User deleted successfully');
+
+    }catch(err){
+ res.status(500).send('Error while deleting the  users', err.message);
+    }
+})
+
+// update data of the user
+app.patch('/user',async(req,res)=>{
+    const userId = req.body.userId
+    const data = req.body
+    try{
+     const user = await User.findByIdAndUpdate({_id:userId},data,{new:true,runValidators:true})
+     res.send('User updated successfully');
+    }
+    catch(err){
+        res.status(500).send('Error while updating the  users', err.message);
     }
 })
 
