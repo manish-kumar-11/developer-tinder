@@ -48,7 +48,7 @@ app.post('/login',async(req,res)=>{
         if(!user){
            throw new Error('Invalid Credentials')
         }
-        const isPasswordValid = await bcrypt.compare(password,user.password)
+        const isPasswordValid = await user.validatePassword(password) // mongoose schema method
         if(isPasswordValid){
             // create the JWT token 
             const token = await user.getJwtToken() // mongoose schmma method
